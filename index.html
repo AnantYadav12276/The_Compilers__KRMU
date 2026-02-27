@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workplace Intelligence | Office Layout</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-light: #4895ef;
+            --secondary-color: #7209b7;
+            --secondary-light: #9d4edd;
+            --success-color: #4cc9f0;
+            --warning-color: #f8961e;
+            --danger-color: #f94144;
+            --dark-color: #1a1b25;
+            --dark-light: #2d3047;
+            --light-color: #f8f9fa;
+            --gray-color: #8a8d9b;
+            --border-radius: 16px;
+            --border-radius-sm: 8px;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            color: var(--dark-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .header-title h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--dark-color), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        
+        .header-title p {
+            color: var(--gray-color);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .view-toggle {
+            display: flex;
+            background: white;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        
+        .view-btn {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--gray-color);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+        
+        .view-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+        
+        /* Office Layout Container */
+        .office-layout-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2.5rem;
+        }
+        
+        .layout-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .layout-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .layout-controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .time-filter {
+            padding: 0.75rem 1.25rem;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: white;
+            font-weight: 500;
+        }
+        
+        /* Office Map - Grid Layout */
+        .office-map {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .map-container {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            overflow: hidden;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .floor-plan {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            background: #f0f2f5;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        /* Zone Styles */
+        .zone {
+            position: absolute;
+            border-radius: 10px;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .zone:hover {
+            transform: scale(1.05);
+            z-index: 10;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .zone-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .zone-occupancy {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .zone-label {
+            font-size: 0.9rem;
+            text-align: center;
+            line-height: 1.2;
+        }
+        
+        .zone-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        
+        /* Heatmap Legend */
+        .heatmap-legend {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--border-radius-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .legend-title {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .legend-colors {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.85rem;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        /* Zone Details Panel */
+        .zone-details {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+        
+        .zone-details-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .zone-details-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .zone-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .zone-stat {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+        }
+        
+        .zone-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .zone-stat-label {
+            font-size: 0.85rem;
+            color: var(--gray-color);
+        }
+        
+        .zone-activity {
+            margin-top: 1.5rem;
+        }
+        
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .activity-list {
+            list-style: none;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem;
+            border-radius: var(--border-radius-sm);
+            background: #f8f9fa;
+            margin-bottom: 0.5rem;
+        }
+        
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.75rem;
+            color: white;
+        }
+        
+        .activity-details h4 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.1rem;
+        }
+        
+        .activity-details p {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+        }
+        
+        /* Seating Visualization */
+        .seating-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+        
+        .seating-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .seating-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .seating-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .seat {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .seat:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .seat.occupied {
+            border-color: var(--success-color);
+            background: rgba(76, 201, 240, 0.1);
+        }
+        
+        .seat.vacant {
+            border-color: var(--gray-color);
+        }
+        
+        .seat.reserved {
+            border-color: var(--warning-color);
+            background: rgba(248, 150, 30, 0.1);
+        }
+        
+        .seat-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--dark-color);
+        }
+        
+        .seat-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .seat-info p {
+            font-size: 0.85rem;
+            color: var(--gray-color);
+        }
+        
+        .seat-status {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+        
+        .status-occupied {
+            background: rgba(76, 201, 240, 0.2);
+            color: var(--success-color);
+        }
+        
+        .status-vacant {
+            background: rgba(138, 141, 155, 0.2);
+            color: var(--gray-color);
+        }
+        
+        .status-reserved {
+            background: rgba(248, 150, 30, 0.2);
+            color: var(--warning-color);
+        }
+        
+        /* Timeline Visualization */
+        .timeline-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .timeline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .timeline-header h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .timeline {
+            display: flex;
+            align-items: center;
+            height: 120px;
+            background: #f8f9fa;
+            border-radius: var(--border-radius-sm);
+            padding: 1rem;
+            position: relative;
+        }
+        
+        .timeline-hours {
+            display: flex;
+            position: absolute;
+            bottom: -25px;
+            width: 100%;
+            justify-content: space-between;
+            padding: 0 1rem;
+        }
+        
+        .timeline-hour {
+            font-size: 0.8rem;
+            color: var(--gray-color);
+        }
+        
+        .timeline-bar {
+            flex: 1;
+            height: 80px;
+            background: linear-gradient(to top, rgba(76, 201, 240, 0.3), rgba(67, 97, 238, 0.8));
+            border-radius: 6px;
+            margin: 0 2px;
+            transition: var(--transition);
+            position: relative;
+        }
+        
+        .timeline-bar:hover {
+            transform: scaleY(1.1);
+        }
+        
+        .timeline-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--dark-color);
+            background: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .office-map {
+                grid-template-columns: 1fr;
+            }
+            
+            .zone-details {
+                order: -1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .header-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .seating-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .zone-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .seating-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .view-toggle {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .view-btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            .layout-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .time-filter {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-title">
+                <h1>Office Layout & Occupancy Analytics</h1>
+                <p>Real-time monitoring of workspace utilization, seating arrangements, and movement patterns</p>
+            </div>
+            
+            <div class="header-controls">
+                <div class="view-toggle">
+                    <button class="view-btn active">Floor Plan</button>
+                    <button class="view-btn">Seating View</button>
+                    <button class="view-btn">Heat Map</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Office Layout Container -->
+        <div class="office-layout-container">
+            <div class="layout-header">
+                <h2>Real-time Office Layout & Occupancy</h2>
+                <div class="layout-controls">
+                    <select class="time-filter">
+                        <option>Real-time View</option>
+                        <option>Today</option>
+                        <option selected>This Week</option>
+                        <option>This Month</option>
+                    </select>
+                    <button class="view-btn active" style="padding: 0.75rem 1.5rem;">
+                        <i class="fas fa-sync-alt"></i> Live Update
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Office Map with Grid Layout -->
+            <div class="office-map">
+                <!-- Zone Details Panel -->
+                <div class="zone-details">
+                    <div class="zone-details-header">
+                        <h3>Zone Details</h3>
+                    </div>
+                    
+                    <div class="zone-stats">
+                        <div class="zone-stat">
+                            <div class="zone-stat-value" id="selectedZoneOccupancy">78%</div>
+                            <div class="zone-stat-label">Current Occupancy</div>
+                        </div>
+                        <div class="zone-stat">
+                            <div class="zone-stat-value" id="selectedZoneCapacity">24/32</div>
+                            <div class="zone-stat-label">Capacity</div>
+                        </div>
+                        <div class="zone-stat">
+                            <div class="zone-stat-value" id="selectedZoneAvgTime">4.2h</div>
+                            <div class="zone-stat-label">Avg. Stay Time</div>
+                        </div>
+                        <div class="zone-stat">
+                            <div class="zone-stat-value" id="selectedZoneProductivity">85%</div>
+                            <div class="zone-stat-label">Productivity Score</div>
+                        </div>
+                    </div>
+                    
+                    <div class="zone-info">
+                        <h4 style="margin-bottom: 0.5rem; color: var(--dark-color);">Zone B: Meeting Rooms</h4>
+                        <p style="color: var(--gray-color); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                            High-occupancy area with conference facilities, AV equipment, and collaboration tools.
+                        </p>
+                    </div>
+                    
+                    <div class="zone-activity">
+                        <div class="activity-title">Recent Activity</div>
+                        <ul class="activity-list">
+                            <li class="activity-item">
+                                <div class="activity-icon" style="background: var(--primary-color);">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h4>Team Meeting</h4>
+                                    <p>Started 30 mins ago • 8 participants</p>
+                                </div>
+                            </li>
+                            <li class="activity-item">
+                                <div class="activity-icon" style="background: var(--success-color);">
+                                    <i class="fas fa-video"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h4>Video Conference</h4>
+                                    <p>Completed 1 hour ago • 45 mins duration</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Map Visualization -->
+                <div class="map-container">
+                    <div class="floor-plan" id="floorPlan">
+                        <!-- Zones will be positioned absolutely -->
+                        <div class="zone" id="zoneA" style="width: 180px; height: 120px; top: 50px; left: 50px; background: linear-gradient(135deg, #4361ee, #3a56d4);">
+                            <div class="zone-content">
+                                <div class="zone-occupancy">42%</div>
+                                <div class="zone-label">Zone A<br>Workstations</div>
+                            </div>
+                            <div class="zone-overlay"></div>
+                        </div>
+                        
+                        <div class="zone" id="zoneB" style="width: 220px; height: 150px; top: 50px; left: 280px; background: linear-gradient(135deg, #4cc9f0, #3ab5d9);">
+                            <div class="zone-content">
+                                <div class="zone-occupancy">78%</div>
+                                <div class="zone-label">Zone B<br>Meeting Rooms</div>
+                            </div>
+                            <div class="zone-overlay"></div>
+                        </div>
+                        
+                        <div class="zone" id="zoneC" style="width: 160px; height: 200px; top: 200px; left: 50px; background: linear-gradient(135deg, #7209b7, #5e07a1);">
+                            <div class="zone-content">
+                                <div class="zone-occupancy">23%</div>
+                                <div class="zone-label">Zone C<br>Collaboration</div>
+                            </div>
+                            <div class="zone-overlay"></div>
+                        </div>
+                        
+                        <div class="zone" id="zoneD" style="width: 180px; height: 140px; top: 220px; left: 250px; background: linear-gradient(135deg, #f8961e, #e0871b);">
+                            <div class="zone-content">
+                                <div class="zone-occupancy">91%</div>
+                                <div class="zone-label">Zone D<br>Quiet Area</div>
+                            </div>
+                            <div class="zone-overlay"></div>
+                        </div>
+                        
+                        <div class="zone" id="zoneE" style="width: 200px; height: 120px; top: 380px; left: 80px; background: linear-gradient(135deg, #f94144, #e03a3d);">
+                            <div class="zone-content">
+                                <div class="zone-occupancy">65%</div>
+                                <div class="zone-label">Zone E<br>Lounge</div>
+                            </div>
+                            <div class="zone-overlay"></div>
+                        </div>
+                        
+                        <div class="zone" id="zoneF" style="width: 150px; height: 180px; top: 380px; left: 320px; background: linear-gradient(135deg, #8a8d9b, #7a7d8a);">
+                            <div class="zone-content">
+                                <div class="zone-occupancy">34%</div>
+                                <div class="zone-label">Zone F<br>Focus Pods</div>
+                            </div>
+                            <div class="zone-overlay"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Heatmap Legend -->
+                    <div class="heatmap-legend">
+                        <div class="legend-title">Occupancy Level:</div>
+                        <div class="legend-colors">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #4cc9f0, #3ab5d9);"></div>
+                                <span>Low (0-50%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #f8961e, #e0871b);"></div>
+                                <span>Moderate (51-80%)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: linear-gradient(135deg, #f94144, #e03a3d);"></div>
+                                <span>High (81-100%)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Seating Visualization -->
+        <div class="seating-container">
+            <div class="seating-header">
+                <h3>Detailed Seating Arrangement</h3>
+                <div class="layout-controls">
+                    <select class="time-filter">
+                        <option>All Zones</option>
+                        <option>Zone A: Workstations</option>
+                        <option selected>Zone B: Meeting Rooms</option>
+                        <option>Zone C: Collaboration</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="seating-grid">
+                <div class="seat occupied">
+                    <div class="seat-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="seat-info">
+                        <h4>Room B-101</h4>
+                        <p>Conference Room</p>
+                        <div class="seat-status status-occupied">Occupied</div>
+                    </div>
+                </div>
+                
+                <div class="seat occupied">
+                    <div class="seat-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="seat-info">
+                        <h4>Room B-102</h4>
+                        <p>Team Meeting</p>
+                        <div class="seat-status status-occupied">Team Meeting</div>
+                    </div>
+                </div>
+                
+                <div class="seat vacant">
+                    <div class="seat-icon">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                    <div class="seat-info">
+                        <h4>Room B-103</h4>
+                        <p>Small Meeting</p>
+                        <div class="seat-status status-vacant">Available</div>
+                    </div>
+                </div>
+                
+                <div class="seat reserved">
+                    <div class="seat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="seat-info">
+                        <h4>Room B-104</h4>
+                        <p>Board Room</p>
+                        <div class="seat-status status-reserved">Reserved</div>
+                    </div>
+                </div>
+                
+                <div class="seat occupied">
+                    <div class="seat-icon">
+                        <i class="fas fa-video"></i>
+                    </div>
+                    <div class="seat-info">
+                        <h4>Room B-105</h4>
+                        <p>Video Conference</p>
+                        <div class="seat-status status-occupied">In Session</div>
+                    </div>
+                </div>
+                
+                <div class="seat vacant">
+                    <div class="seat-icon">
+                        <i class="fas fa-chalkboard"></i>
+                    </div>
+                    <div class="seat-info">
+                        <h4>Room B-106</h4>
+                        <p>Presentation Room</p>
+                        <div class="seat-status status-vacant">Available</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Timeline Visualization -->
+        <div class="timeline-container">
+            <div class="timeline-header">
+                <h3>Hourly Occupancy Trend - Zone B (Meeting Rooms)</h3>
+                <div class="layout-controls">
+                    <select class="time-filter">
+                        <option>Today</option>
+                        <option selected>Yesterday</option>
+                        <option>This Week Avg.</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-bar" style="height: 30%;">
+                    <div class="timeline-value">30%</div>
+                </div>
+                <div class="timeline-bar" style="height: 25%;">
+                    <div class="timeline-value">25%</div>
+                </div>
+                <div class="timeline-bar" style="height: 20%;">
+                    <div class="timeline-value">20%</div>
+                </div>
+                <div class="timeline-bar" style="height: 35%;">
+                    <div class="timeline-value">35%</div>
+                </div>
+                <div class="timeline-bar" style="height: 50%;">
+                    <div class="timeline-value">50%</div>
+                </div>
+                <div class="timeline-bar" style="height: 65%;">
+                    <div class="timeline-value">65%</div>
+                </div>
+                <div class="timeline-bar" style="height: 78%;">
+                    <div class="timeline-value">78%</div>
+                </div>
+                <div class="timeline-bar" style="height: 85%;">
+                    <div class="timeline-value">85%</div>
+                </div>
+                <div class="timeline-bar" style="height: 91%;">
+                    <div class="timeline-value">91%</div>
+                </div>
+                <div class="timeline-bar" style="height: 82%;">
+                    <div class="timeline-value">82%</div>
+                </div>
+                <div class="timeline-bar" style="height: 70%;">
+                    <div class="timeline-value">70%</div>
+                </div>
+                <div class="timeline-bar" style="height: 45%;">
+                    <div class="timeline-value">45%</div>
+                </div>
+                
+                <div class="timeline-hours">
+                    <span class="timeline-hour">8 AM</span>
+                    <span class="timeline-hour">9 AM</span>
+                    <span class="timeline-hour">10 AM</span>
+                    <span class="timeline-hour">11 AM</span>
+                    <span class="timeline-hour">12 PM</span>
+                    <span class="timeline-hour">1 PM</span>
+                    <span class="timeline-hour">2 PM</span>
+                    <span class="timeline-hour">3 PM</span>
+                    <span class="timeline-hour">4 PM</span>
+                    <span class="timeline-hour">5 PM</span>
+                    <span class="timeline-hour">6 PM</span>
+                    <span class="timeline-hour">7 PM</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Zone interaction
+        const zones = document.querySelectorAll('.zone');
+        const zoneDetails = {
+            zoneA: {
+                occupancy: "42%",
+                capacity: "18/42",
+                avgTime: "6.5h",
+                productivity: "88%",
+                name: "Zone A: Workstations",
+                description: "Open workspace with individual desks, monitors, and ergonomic chairs. High productivity area with good natural light."
+            },
+            zoneB: {
+                occupancy: "78%",
+                capacity: "24/32",
+                avgTime: "4.2h",
+                productivity: "85%",
+                name: "Zone B: Meeting Rooms",
+                description: "High-occupancy area with conference facilities, AV equipment, and collaboration tools."
+            },
+            zoneC: {
+                occupancy: "23%",
+                capacity: "8/35",
+                avgTime: "2.1h",
+                productivity: "72%",
+                name: "Zone C: Collaboration",
+                description: "Informal collaboration space with whiteboards, comfortable seating, and brainstorming tools."
+            },
+            zoneD: {
+                occupancy: "91%",
+                capacity: "38/42",
+                avgTime: "5.8h",
+                productivity: "92%",
+                name: "Zone D: Quiet Area",
+                description: "Focus-oriented workspace with soundproofing, individual pods, and minimal distractions."
+            },
+            zoneE: {
+                occupancy: "65%",
+                capacity: "16/25",
+                avgTime: "1.2h",
+                productivity: "68%",
+                name: "Zone E: Lounge",
+                description: "Breakout area with comfortable seating, refreshments, and informal meeting spaces."
+            },
+            zoneF: {
+                occupancy: "34%",
+                capacity: "12/35",
+                avgTime: "3.4h",
+                productivity: "79%",
+                name: "Zone F: Focus Pods",
+                description: "Individual soundproof pods for focused work, video calls, and private conversations."
+            }
+        };
+
+        // Set initial selected zone
+        let selectedZone = 'zoneB';
+        
+        // Update zone details panel
+        function updateZoneDetails(zoneId) {
+            const zone = zoneDetails[zoneId];
+            document.getElementById('selectedZoneOccupancy').textContent = zone.occupancy;
+            document.getElementById('selectedZoneCapacity').textContent = zone.capacity;
+            document.getElementById('selectedZoneAvgTime').textContent = zone.avgTime;
+            document.getElementById('selectedZoneProductivity').textContent = zone.productivity;
+            
+            const zoneInfo = document.querySelector('.zone-info');
+            zoneInfo.innerHTML = `
+                <h4 style="margin-bottom: 0.5rem; color: var(--dark-color);">${zone.name}</h4>
+                <p style="color: var(--gray-color); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                    ${zone.description}
+                </p>
+            `;
+            
+            // Update zone highlight
+            zones.forEach(z => z.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)');
+            document.getElementById(zoneId).style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+        }
+        
+        // Add click event to zones
+        zones.forEach(zone => {
+            zone.addEventListener('click', function() {
+                const zoneId = this.id;
+                selectedZone = zoneId;
+                updateZoneDetails(zoneId);
+            });
+        });
+        
+        // Initialize with zone B selected
+        updateZoneDetails(selectedZone);
+        
+        // Real-time data simulation
+        function simulateRealTimeData() {
+            // Randomly update zone occupancies
+            zones.forEach(zone => {
+                const zoneId = zone.id;
+                const currentOccupancy = parseInt(zoneDetails[zoneId].occupancy);
+                const change = Math.floor(Math.random() * 10) - 3; // -3 to +6
+                const newOccupancy = Math.max(10, Math.min(100, currentOccupancy + change));
+                
+                // Update zone data
+                zoneDetails[zoneId].occupancy = `${newOccupancy}%`;
+                
+                // Update zone visual
+                const occupancyElement = zone.querySelector('.zone-occupancy');
+                occupancyElement.textContent = `${newOccupancy}%`;
+                
+                // Update color based on occupancy
+                let gradient;
+                if (newOccupancy < 50) {
+                    gradient = 'linear-gradient(135deg, #4cc9f0, #3ab5d9)';
+                } else if (newOccupancy < 80) {
+                    gradient = 'linear-gradient(135deg, #f8961e, #e0871b)';
+                } else {
+                    gradient = 'linear-gradient(135deg, #f94144, #e03a3d)';
+                }
+                
+                zone.style.background = gradient;
+                
+                // Update capacity
+                const capacityParts = zoneDetails[zoneId].capacity.split('/');
+                const totalCapacity = parseInt(capacityParts[1]);
+                const newCapacity = Math.floor(totalCapacity * (newOccupancy / 100));
+                zoneDetails[zoneId].capacity = `${newCapacity}/${totalCapacity}`;
+            });
+            
+            // Update selected zone details if needed
+            updateZoneDetails(selectedZone);
+            
+            // Update seating status randomly
+            const seats = document.querySelectorAll('.seat');
+            seats.forEach(seat => {
+                const random = Math.random();
+                if (random > 0.7) {
+                    // Change status
+                    const statuses = ['occupied', 'vacant', 'reserved'];
+                    const currentStatus = Array.from(seat.classList).find(cls => 
+                        cls === 'occupied' || cls === 'vacant' || cls === 'reserved'
+                    );
+                    
+                    const newStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                    
+                    if (currentStatus !== newStatus) {
+                        seat.classList.remove('occupied', 'vacant', 'reserved');
+                        seat.classList.add(newStatus);
+                        
+                        const statusElement = seat.querySelector('.seat-status');
+                        if (statusElement) {
+                            statusElement.classList.remove('status-occupied', 'status-vacant', 'status-reserved');
+                            statusElement.classList.add(`status-${newStatus}`);
+                            statusElement.textContent = 
+                                newStatus === 'occupied' ? 'Occupied' : 
+                                newStatus === 'vacant' ? 'Available' : 'Reserved';
+                        }
+                    }
+                }
+            });
+            
+            // Update timeline randomly
+            const timelineBars = document.querySelectorAll('.timeline-bar');
+            timelineBars.forEach((bar, index) => {
+                // Peak hours (10AM-4PM) have higher base occupancy
+                const baseHeight = index >= 2 && index <= 8 ? 50 : 30;
+                const randomChange = Math.floor(Math.random() * 30) - 10;
+                const newHeight = Math.max(15, Math.min(95, baseHeight + randomChange));
+                
+                bar.style.height = `${newHeight}%`;
+                bar.querySelector('.timeline-value').textContent = `${newHeight}%`;
+            });
+        }
+        
+        // Update data every 8 seconds
+        setInterval(simulateRealTimeData, 8000);
+        
+        // View toggle functionality
+        const viewButtons = document.querySelectorAll('.view-btn');
+        viewButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons in the same group
+                const parent = this.closest('.view-toggle');
+                parent.querySelectorAll('.view-btn').forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                // Show/hide relevant sections based on view
+                const view = this.textContent.trim();
+                if (view === 'Floor Plan') {
+                    document.querySelector('.map-container').style.display = 'block';
+                    document.querySelector('.seating-container').style.display = 'block';
+                } else if (view === 'Seating View') {
+                    document.querySelector('.map-container').style.display = 'none';
+                    document.querySelector('.seating-container').style.display = 'block';
+                } else if (view === 'Heat Map') {
+                    document.querySelector('.map-container').style.display = 'block';
+                    document.querySelector('.seating-container').style.display = 'none';
+                    // Add heatmap effect
+                    zones.forEach(zone => {
+                        const occupancy = parseInt(zone.querySelector('.zone-occupancy').textContent);
+                        let opacity = occupancy / 100;
+                        zone.style.opacity = 0.7 + (opacity * 0.3);
+                        zone.style.boxShadow = `0 0 20px rgba(255, ${255 - (occupancy * 2.5)}, ${255 - (occupancy * 2.5)}, 0.8)`;
+                    });
+                }
+            });
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            simulateRealTimeData();
+        });
+    </script>
+</body>
+</html>
